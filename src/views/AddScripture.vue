@@ -69,7 +69,7 @@
                 </form>
             </div>  
         </div>    
-        <button @click="addScripture()">Add</button>
+        <button class="addBtn" @click="addScripture()">Add</button>
     </div>
 </div>
 </template>
@@ -151,8 +151,6 @@ export default {
         align-items:center;
         margin-top:30px;
         text-align:center;
-       
-    
     }
 
     #addScriptureForm h1{
@@ -188,8 +186,8 @@ export default {
     }
 
     #addScriptureForm button{
-        width:120px;
-        height:30px;
+        width:150px;
+        height:50px;
         font-size:20px;
         margin-top:15px;
     }

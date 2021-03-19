@@ -10,7 +10,7 @@
          <section id = "footer">
         <div class = "footer container">
           <p>My scripture</p>
-          <a href = "git@github.com:kyungwooJo/CreativeProject3.git">My gitHub page link</a>
+          <a href = "https://github.com/kyungwooJo/CreativeProject3">My gitHub page link</a>
         </div>
       </section>   
   </html>
@@ -28,7 +28,8 @@
     margin-right: auto;
     left: 0;
     right: 0;
-    width:140px;
+    top:50px;
+    width:120px;
 }
 
 #navbar {
@@ -39,7 +40,6 @@
 .appbody{ 
   length:100%;
   min-height:calc(100vh - 10vh);
-  background-color:pink;
 }
 
 
@@ -115,12 +115,8 @@
 }
 
 
-@media screen and (min-width:768px) {
+@media screen and (min-width:800px) {
   
-    .nav-hamberger{
-        display:none;
-    }
-
     #navbar {
         display:flex;
         justify-content: space-between;
@@ -139,5 +135,14 @@
     .navbar-unlist li a{
       font-size:16px;
     }
+
 }
+
+    @media screen and (max-width:800px) {
+      #mainLogo{
+        display:none;
+      }
+    
+    }
+
 </style>

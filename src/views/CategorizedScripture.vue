@@ -43,7 +43,7 @@
                 <option value="2021">atonement</option>
             </select>
         </div>
-        <button @click="getScripture()">Get</button>
+        <button class="getBtn" @click="getScripture()">Get</button>
     </div>
 
     <p v-if="Object.keys(scriptures).length == 0" class="noMatchingIndicator">No matching Scripture</p>

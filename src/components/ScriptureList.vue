@@ -76,7 +76,7 @@ export default {
     margin-bottom:20px;
    }
 
-    @media screen and (min-width:1000px){
+    @media screen and (min-width:1200px){
       
       .scriptureInfo .scriprueContainer {
         width:100%;

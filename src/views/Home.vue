@@ -51,7 +51,7 @@ export default {
 
 <style>
   .marginPlus{
-    margin-top:100px;
+    margin-top:150px;
   }
 
   #btnWrap {
@@ -59,7 +59,9 @@ export default {
     justify-content:center;
   }
 
-  #btnWrap .expendBtn{
+  #btnWrap .expendBtn,
+  .getBtn,
+  .addBtn{
     padding:5px 5px;
     color: white;
     background: #4C8FFB;
