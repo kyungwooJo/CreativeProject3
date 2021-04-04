@@ -10,7 +10,7 @@
       </div>   
     </section>    
     <div id="totalListNum" class="marginPlus">
-      <span>Total number of scriptures in list: </span><span class="spanRed">{{this.$root.$data.totalNum}}</span>
+      <span>Total number of scriptures in list: </span><span class="spanRed">{{Object.keys(scriptures).length}}</span>
     </div>
     <div id="btnWrap">
       <button class="expendBtn" v-if="!this.$root.$data.isExpend" @click="expendScriptureList()">Expend List</button>
@@ -24,11 +24,24 @@
 
 <script>
 // @ is an alias to /src
+import axios from 'axios';
 import ScriptureList from "../components/ScriptureList.vue"
 export default {
   name: 'Home',
   components: {
     ScriptureList
+  },
+
+data() {
+        return {
+        scriptureList: [],
+        scripture:null,
+        book: "",
+        topic: "",
+       }
+  },   
+  created() {
+    this.getScriptureList();
   },
 
   methods: {
@@ -38,12 +51,21 @@ export default {
 
     shirnkScriptureList(){
       this.$root.$data.isExpend = false;
+    },
+
+    async getScriptureList() {
+       try{
+         const response = await axios.get("/api/scripture");
+         this.$root.$data.myScriptureList = response.data;
+      }catch (error) {
+        console.log(error);
+      }	
     }
   },
 
   computed: {
     scriptures(){
-      return this.$root.$data.scriptures
+      return this.$root.$data.myScriptureList;
     }
   }
 }

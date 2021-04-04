@@ -10,7 +10,7 @@
       </div>   
     </section>   
     <div id="totalListNum" class="marginPlus">
-      <span>Total number of scriptures in list: </span><span class="spanRed">{{this.$root.$data.totalNum}}</span>
+      <span>Total number of scriptures in list: </span><span class="spanRed">{{Object.keys(this.$root.$data.myScriptureList).length}}</span>
     </div>
     <div id="addScriptureForm">
         <h1>Add more scripure!</h1>
@@ -75,9 +75,9 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
   name: 'AddScripture',
-  
   data() {
       return {
           id: '',
@@ -89,43 +89,63 @@ export default {
       }
   },
 
+
   methods: {
-      addScripture() {
-          
-          this.$root.$data.originalKeyVal++;
-          this.chapter = document.getElementById('chapterValue').value;
-          this.verse = document.getElementById('verseValue').value;
-          this.content = document.getElementById('contextValue').value;
+    async addItem() {
+      try {
+        await axios.post(`/api/projects/${this.project._id}/items`, {
+          text: this.text,
+          completed: false
+        });
+        this.text = "";
+        this.getItems();
+      } catch (error) {
+        console.log(error);
+      }
+    },
 
-          if(Object.keys(this.$root.$data.scriptures.filter(scriptures => scriptures.book == this.book && scriptures.chapter == this.chapter && scriptures.verse == this.verse)).length == 0
-                && document.getElementById('chapterValue').value != ''
-                && document.getElementById('verseValue').value != ''
-                && document.getElementById('contextValue').value != ''
-                && this.topic != ''
-                && this.book != '' ) {            
+    async addScripture() {
+          try{  
+            this.$root.$data.originalKeyVal++;
+            this.chapter = document.getElementById('chapterValue').value;
+            this.verse = document.getElementById('verseValue').value;
+            this.content = document.getElementById('contextValue').value;
 
-              this.$root.$data.totalNum++;
-              this.id = this.$root.$data.originalKeyVal; 
-              this.$root.$data.scriptures.push({
-              id: this.id,
-              book: this.book,
-              chapter: this.chapter,
-              verse: this.verse,
-              topic: this.topic,
-              content: this.content
-          })
-           alert("Added successfully!");
-        }
+            if(Object.keys(this.$root.$data.myScriptureList.filter(scriptures => scriptures.book == this.book && scriptures.chapter == this.chapter && scriptures.verse == this.verse)).length == 0
+                    && document.getElementById('chapterValue').value != ''
+                    && document.getElementById('verseValue').value != ''
+                    && document.getElementById('contextValue').value != ''
+                    && this.topic != ''
+                    && this.book != '' ) {            
+                await axios.post('/api/scripture', {
+                    book: this.book,
+                    chapter: this.chapter,
+                    verse: this.verse,
+                    text: this.content,
+                    topic: this.topic,
+                });         
+                this.$root.$data.myScriptureList.push({
+                    book: this.book,
+                    chapter: this.chapter,
+                    verse: this.verse,
+                    text: this.content,
+                    topic: this.topic
+            });
+            alert("Added successfully!");
+            }
 
-       else if(Object.keys(this.$root.$data.scriptures.filter(scriptures => scriptures.book == this.book && scriptures.chapter == this.chapter && scriptures.verse == this.verse)).length !== 0){
-            alert("You already have that scripture in your list");
+            else if(Object.keys(this.$root.$data.myScriptureList.filter(scriptures => scriptures.book == this.book && scriptures.chapter == this.chapter && scriptures.verse == this.verse)).length !== 0){
+                    alert("You already have that scripture in your list");
+            }
+
+            else{
+                    alert("You have empty textfiled. Make sure fill them out all");
+                }
+       }catch(error){
+           return 0;
        }
 
-       else{
-            alert("You have empty textfiled. Make sure fill them out all");
-        }
-
-      },
+    },
 
       bookChange(e) {
         if(e.target.options.selectedIndex > -1){

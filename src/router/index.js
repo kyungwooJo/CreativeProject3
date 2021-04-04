@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import CategorizedScripture from '../views/CategorizedScripture.vue'
 import AddScripture from '../views/AddScripture.vue'
+import EditScripture from '../views/EditScripture.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -20,6 +21,11 @@ const routes = [
     path: '/AddScripture',
     neme: 'Addscripture',
     component: AddScripture
+  },
+  {
+    path: '/EditScripture',
+    name: 'EditScripture',
+    component: EditScripture
   }
 ]
 

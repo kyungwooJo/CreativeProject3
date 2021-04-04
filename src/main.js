@@ -10,7 +10,13 @@ let data = {
     myScriptureList: [],
     isExpend: false,
     totalNum: 20,
-    originalKeyVal:20
+    originalKeyVal:20,
+    selectedBook: "",
+    selectedChapter: "",
+    selectedVerse: "",
+    selectedText: "",
+    selectedTopic: "",
+    selectedId: ""
 }
 
 new Vue({

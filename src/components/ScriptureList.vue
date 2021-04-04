@@ -1,7 +1,7 @@
 <template>
 <div class = "wrapper">   
     <div class = "scripture">
-        <div class = scripture v-for="scripture in scriptures" :key="scripture.id">
+        <div class = scripture v-for="scripture in scriptures" :key="scripture._id">
             <div class ="scriptureInfo">
                 <div class="scriprueContainer">
                   <div class="scriptureTitleSection">
@@ -9,8 +9,9 @@
                     <h3>({{scripture.topic}})</h3>
                   </div>
                   <div class="scriptureBodySection">
-                    <p>{{scripture.content}}</p>
-                    <button @click="removeFromList(scripture.id)" class="removeBtn">Remove</button>
+                    <p>{{scripture.text}}</p>
+                    <button @click="removeFromList(scripture)" class="removeBtn">Remove</button>
+                    <router-link to = "/EditScripture"><button @click="editScripture(scripture)" class="editBtn">Edit</button></router-link>
                   </div>
                 </div>
                 <hr>
@@ -21,6 +22,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
   name: 'ScriptureList',
   props: {
@@ -28,12 +30,26 @@ export default {
   },
 
   methods: {
-    removeFromList(id) {
-      this.$root.$data.totalNum--;
-      this.$root.$data.scriptures = this.$root.$data.scriptures.filter(scripture => scripture.id !== id);
+  async removeFromList(item) {
+    try {
+      console.log(item._id);
+      await axios.delete("api/scripture/" + item._id);
+      this.$root.$data.myScriptureList = this.$root.$data.myScriptureList.filter(scripture => scripture._id !== item._id);    
+    }catch(error) {
+      console.log(error);
     }
-  }
+ },
 
+ editScripture(scripture) {
+   this.$root.$data.selectedBook = scripture.book;
+   this.$root.$data.selectedVerse = scripture.verse;
+   this.$root.$data.selectedChapter = scripture.chapter;
+   this.$root.$data.selectedTopic = scripture.topic;
+   this.$root.$data.selectedText = scripture.text;
+   this.$root.$data.selectedId = scripture._id;  
+ }
+  
+ }
 }
 </script>
 
@@ -67,6 +83,16 @@ export default {
     border: 1px solid #DD4B39;
     font-size:14px;
     border-radius:10px;
+   }
+
+   .scriptureInfo .editBtn{
+    padding:8px 8px;
+    color: white;
+    background: #4C8FFB;
+    border: 1px #3079ED solid;
+    font-size:14px;
+    border-radius:10px;
+
    }
 
    .scriptureInfo p{

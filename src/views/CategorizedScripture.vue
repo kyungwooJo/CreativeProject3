@@ -53,7 +53,7 @@
 </template>
 
 <script>
-
+import axios from 'axios';
 import ScriptureList from "../components/ScriptureList.vue"
 export default {
     name: 'categorizedScripture',
@@ -62,26 +62,39 @@ export default {
     },
     data() {
         return {
-            book: '',
-            topic: ''
-        }
+        scriptureList: [],
+        scripture:null,
+        book: "",
+        topic: "",
+       }
+    }, 
+
+    created() {
+     this.getScriptureList();
     },
 
     methods: {
-
         getScripture(){
             let e1 = document.getElementById('bookSelect');
             let e2 = document.getElementById('topicSelect');
             this.book = e1.options[e1.selectedIndex].text;
             this.topic = e2.options[e2.selectedIndex].text;
-        }
-    },
+        },
 
-    
+      async getScriptureList() {
+         try{
+            const response = await axios.get("/api/scripture");
+            this.$root.$data.myScriptureList = response.data;
+         }catch (error) {
+            console.log(error);
+         }	
+
+      }
+    },
 
     computed: {
         scriptures() {
-            return this.$root.$data.scriptures.filter(scripture => scripture.book == this.book && scripture.topic == this.topic);
+            return this.$root.$data.myScriptureList.filter(scripture => scripture.book == this.book && scripture.topic == this.topic);
         }
     }    
 }
